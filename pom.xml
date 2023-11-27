@@ -9,12 +9,14 @@
         <version>2.7.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.yupi</groupId>
-    <artifactId>sql-father-backend</artifactId>
+    <groupId>com.xcl</groupId>
+    <artifactId>my-sql-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sql-father-backend</name>
+    <name>my-sql-backend</name>
     <properties>
         <java.version>1.8</java.version>
+        <!--properties节点中设置docker镜像的前缀“my-image”-->
+        <docker.image.prefix>my-image</docker.image.prefix>
     </properties>
     <dependencies>
         <dependency>
@@ -110,11 +112,16 @@
     </dependencies>
 
     <build>
+        <!-- 定义输出的最终构建文件名 -->
+        <finalName>my-sql-backend</finalName>
         <plugins>
             <plugin>
+                <!-- Spring Boot Maven 插件 -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.2</version>
                 <configuration>
+                    <!-- 排除特定的依赖项，这里排除了 lombok -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -123,7 +130,33 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <!-- Docker Maven 插件 -->
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <!-- Docker 守护进程的主机地址 -->
+                    <dockerHost>http://192.168.227.133:2375</dockerHost>
+                    <!-- 定义生成的 Docker 镜像名称 -->
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- Dockerfile 所在的目录 -->
+                    <dockerDirectory>docker</dockerDirectory>
+                    <!-- 定义构建镜像所需的资源 -->
+                    <resources>
+                        <resource>
+                            <!-- 目标路径 -->
+                            <targetPath>/</targetPath>
+                            <!-- Maven 构建目录中的目录路径 -->
+                            <directory>${project.build.directory}</directory>
+                            <!-- 包含的文件名 -->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 
 </project>
