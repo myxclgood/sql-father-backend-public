@@ -25,4 +25,4 @@ WORKDIR /app
 # 将本地的 websocket-demo.jar 复制到容器内的 /app 目录
 ADD my-sql-backend.jar my-sql-backend.jar
 EXPOSE 8102
-ENTRYPOINT ["java", "-jar", "-Dserver.port=8102", '-Dspring.profiles.active=prod', "/app/my-sql-backend.jar"]
+ENTRYPOINT ["java", "-jar", "-Dserver.port=8102", "-Dspring.profiles.active=prod", "/app/my-sql-backend.jar"]

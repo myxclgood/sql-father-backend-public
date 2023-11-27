@@ -139,7 +139,7 @@
                     <!-- Docker 守护进程的主机地址 -->
                     <dockerHost>http://192.168.227.133:2375</dockerHost>
                     <!-- 定义生成的 Docker 镜像名称 -->
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
                     <!-- Dockerfile 所在的目录 -->
                     <dockerDirectory>docker</dockerDirectory>
                     <!-- 定义构建镜像所需的资源 -->
