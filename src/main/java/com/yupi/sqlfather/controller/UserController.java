@@ -10,25 +10,18 @@ import com.yupi.sqlfather.common.ErrorCode;
 import com.yupi.sqlfather.common.ResultUtils;
 import com.yupi.sqlfather.constant.UserConstant;
 import com.yupi.sqlfather.exception.BusinessException;
-import com.yupi.sqlfather.model.dto.UserAddRequest;
-import com.yupi.sqlfather.model.dto.UserLoginRequest;
-import com.yupi.sqlfather.model.dto.UserQueryRequest;
-import com.yupi.sqlfather.model.dto.UserRegisterRequest;
-import com.yupi.sqlfather.model.dto.UserUpdateRequest;
+import com.yupi.sqlfather.model.dto.*;
 import com.yupi.sqlfather.model.entity.User;
 import com.yupi.sqlfather.model.vo.UserVO;
 import com.yupi.sqlfather.service.UserService;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户接口
@@ -75,6 +68,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public BaseResponse<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
+
         if (userLoginRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

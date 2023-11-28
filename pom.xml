@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.xcl</groupId>
     <artifactId>my-sql-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>my-sql-backend</name>
     <properties>
         <java.version>1.8</java.version>

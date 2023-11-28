@@ -1,6 +1,6 @@
 spring:
-  freemarker:
-    template-loader-path: classpath:/templates/
+#  freemarker:
+#    template-loader-path: classpath:/templates/
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,8 +1,5 @@
 package com.yupi.sqlfather.service.impl;
 
-import static com.yupi.sqlfather.constant.UserConstant.ADMIN_ROLE;
-import static com.yupi.sqlfather.constant.UserConstant.USER_LOGIN_STATE;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yupi.sqlfather.common.ErrorCode;
@@ -10,12 +7,16 @@ import com.yupi.sqlfather.exception.BusinessException;
 import com.yupi.sqlfather.mapper.UserMapper;
 import com.yupi.sqlfather.model.entity.User;
 import com.yupi.sqlfather.service.UserService;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import static com.yupi.sqlfather.constant.UserConstant.ADMIN_ROLE;
+import static com.yupi.sqlfather.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * 用户服务实现类
@@ -104,6 +105,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 3. 记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
+        log.info("user login success, SessionID: {}, USER_LOGIN_STATE: {}", request.getSession().getId(),request.getSession().getAttribute(USER_LOGIN_STATE));
         return user;
     }
 
@@ -117,6 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public User getLoginUser(HttpServletRequest request) {
         // 先判断是否已登录
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        log.info("Get the currently logged in user, SessionID: {}, USER_LOGIN_STATE: {}", request.getSession().getId(),request.getSession().getAttribute(USER_LOGIN_STATE));
         User currentUser = (User) userObj;
         if (currentUser == null || currentUser.getId() == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);

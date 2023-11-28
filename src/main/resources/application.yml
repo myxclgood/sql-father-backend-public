@@ -1,36 +1,46 @@
 spring:
   application:
-    name: my-sql-backend
-  # 默认 dev 环境
+    name: my-sql-backend # 应用的名称
   profiles:
-    active: dev
-  # 支持 swagger3
+    active: dev # 默认使用的配置文件环境，这里设置为开发环境
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
-  # 数据库配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.227.133:3306/sqlfather
-    username: root
-    password: admin
+      matching-strategy: ant_path_matcher # 路径匹配策略，这里设置为Ant风格
+  datasource: # 数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver # 数据库驱动类名
+    url: jdbc:mysql://192.168.227.133:3306/sqlfather # 数据库连接URL
+    username: root # 数据库用户名
+    password: admin # 数据库密码
 server:
-  address: 0.0.0.0
-  port: 8102
+  address: 0.0.0.0 # 服务器地址，0.0.0.0表示监听所有网络接口
+  port: 8102 # 服务器端口
   servlet:
-    context-path: /api
-    # session 30 天过期
-    session:
-      timeout: "P30D"
-      cookie:
-        same-site: none
-        secure: true
-mybatis-plus:
+    context-path: /api # 应用的上下文路径
+    session: # 会话配置
+      timeout: "P30D" # 会话超时时间，P30D表示30天
+#      SameSite属性用于防止跨站请求伪造（CSRF）。它有三个可能的值：Strict，Lax和None。
+#
+#      Strict：Cookie只会在同站请求中被发送，即只有当请求的URL和Cookie的域名完全匹配时，
+#      Cookie才会被发送。这提供了最高级别的隔离，但可能会导致一些用户体验问题。
+#      例如，如果用户在一个新的标签页中打开一个链接，他们可能会发现他们没有登录，
+#      即使他们在原来的标签页中已经登录了。
+#
+#      Lax：除了在同站请求中发送Cookie外，还会在一些跨站的GET请求中发送Cookie。
+#      这些GET请求必须是“顶级导航”，即它们会改变浏览器的地址栏。这提供了一个折衷的解决方案，
+#      它可以防止大多数CSRF攻击，同时不会导致太多的用户体验问题。
+#
+#      None：Cookie会在所有请求中被发送，无论是同站请求还是跨站请求。
+#      这等同于没有设置SameSite属性。如果你选择这个选项，你必须同时设置Secure属性，
+#      以确保Cookie只能通过安全的HTTPS连接被发送。
+      cookie: # Cookie配置
+        same-site: none # SameSite属性，none表示在跨站请求中也会发送Cookie
+        secure: true # Secure属性，false表示Cookie可以在非HTTPS连接中发送
+mybatis-plus: # MyBatis Plus配置
   configuration:
-    map-underscore-to-camel-case: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false # 是否将数据库字段从下划线形式映射到驼峰形式
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 日志实现类
   global-config:
     db-config:
-      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
-      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
-      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+      logic-delete-field: isDelete # 逻辑删除字段名
+      logic-delete-value: 1 # 表示已删除的逻辑值
+      logic-not-delete-value: 0 # 表示未删除的逻辑值

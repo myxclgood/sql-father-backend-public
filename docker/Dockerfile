@@ -19,7 +19,9 @@
 
 
 # 使用 openjdk:8-jdk-alpine 作为基础镜像，该镜像包含了 OpenJDK 8 和 Alpine Linux
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-slim
+# 设置时区为中国上海
+ENV TZ=Asia/Shanghai
 # 创建一个卷，将宿主机的 /tmp 目录挂载到容器内的 /tmp 目录
 WORKDIR /app
 # 将本地的 websocket-demo.jar 复制到容器内的 /app 目录
